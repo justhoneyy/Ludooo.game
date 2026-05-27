@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfect Ludo</title>
+    <title>Perfect Ludo - By Justhoneyy</title>
     <style>
         * {
             margin: 0;
@@ -67,7 +67,7 @@
         .player-info {
             padding: 12px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.48);
             border-left: 5px solid transparent;
             display: flex;
             align-items: center;
@@ -186,9 +186,253 @@
             .game-wrapper { flex-direction: column; align-items: center; }
             .sidebar { min-width: 100%; }
         }
-    </style>
+    
+.start-menu{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.88);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+.menu-box{
+background:#1F2937;
+padding:30px;
+border-radius:20px;
+width:320px;
+color:white;
+text-align:center;
+}
+.menu-box select,.menu-box button{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+}
+.top-controls{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+.top-controls button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+
+/* ===== PERFECT RESPONSIVE ALIGNMENT ===== */
+
+html,body{
+width:100%;
+overflow-x:hidden;
+}
+
+body{
+padding:8px;
+}
+
+.container{
+width:100%;
+max-width:1400px;
+margin:auto;
+}
+
+.game-wrapper{
+width:100%;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.board-container{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:10px;
+max-width:100%;
+overflow:hidden;
+}
+
+canvas{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+.sidebar{
+flex:1;
+min-width:260px;
+max-width:340px;
+}
+
+@media (max-width: 1100px){
+
+.game-wrapper{
+flex-direction:column;
+align-items:center;
+}
+
+.sidebar{
+width:100%;
+max-width:540px;
+}
+
+}
+
+@media (max-width: 768px){
+
+body{
+padding:4px;
+}
+
+.container{
+width:100%;
+}
+
+.board-container{
+padding:4px;
+width:100%;
+}
+
+canvas{
+width:96vw !important;
+height:96vw !important;
+max-width:540px;
+max-height:540px;
+}
+
+.sidebar{
+width:96vw;
+max-width:540px;
+padding:14px;
+}
+
+.player-info{
+padding:10px;
+}
+
+.roll-btn,
+.top-controls button{
+padding:12px;
+font-size:15px;
+}
+
+.dice{
+width:64px !important;
+height:64px !important;
+line-height:64px !important;
+font-size:34px !important;
+margin:auto;
+}
+
+.message{
+font-size:14px;
+min-height:42px;
+}
+
+}
+
+@media (max-width: 480px){
+
+canvas{
+width:98vw !important;
+height:98vw !important;
+}
+
+.sidebar{
+width:98vw;
+border-radius:12px;
+}
+
+.container{
+padding:0;
+}
+
+.board-container{
+padding:2px;
+}
+
+}
+
+
+
+/* ===== JUSTHONEYY WATERMARK ===== */
+
+body::before{
+content:"By Justhoneyy";
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) rotate(-30deg);
+font-size:5vw;
+font-weight:900;
+color:rgba(255,255,255,0.48);
+pointer-events:none;
+z-index:0;
+white-space:nowrap;
+}
+
+.board-container::after{
+content:"By Justhoneyy";
+position:absolute;
+bottom:10px;
+right:14px;
+font-size:11px;
+font-weight:700;
+color:rgba(0,0,0,0.65);
+pointer-events:none;
+}
+
+.sidebar::after{
+content:"By Justhoneyy";
+position:absolute;
+bottom:8px;
+left:50%;
+transform:translateX(-50%);
+font-size:10px;
+letter-spacing:2px;
+color:rgba(255,255,255,0.30);
+pointer-events:none;
+}
+
+.board-container,
+.sidebar{
+position:relative;
+overflow:hidden;
+}
+
+</style>
 </head>
 <body>
+
+<div class="start-menu" id="startMenu">
+<div class="menu-box">
+<h1>🎲 CLASSIC LUDO</h1>
+
+<select id="playerMode">
+<option value="2">2 Players</option>
+<option value="3">3 Players</option>
+<option value="4" selected>4 Players</option>
+</select>
+
+<select id="humanMode">
+<option value="1">1 Human</option>
+<option value="2">2 Humans</option>
+<option value="3">3 Humans</option>
+<option value="4">4 Humans</option>
+</select>
+
+<button id="startGameBtn">START GAME</button>
+</div>
+</div>
+
 <div class="container">
     <div class="game-wrapper">
         <div class="board-container">
@@ -203,7 +447,11 @@
                 <button class="roll-btn" id="rollBtn">ROLL DICE</button>
             </div>
             
-            <div class="message" id="message">Red's turn to roll!</div>
+            <div class="top-controls">
+<button id="pauseBtn">Pause</button>
+<button id="restartBtn">Restart</button>
+</div>
+<div class="message" id="message">Select mode to start</div>
             <div class="winner-banner" id="winnerBanner">🏆 Player Wins!</div>
         </div>
     </div>
@@ -522,10 +770,16 @@ function drawSingleToken(x, y, colorObj, scale) {
 document.getElementById('rollBtn').addEventListener('click', rollDice);
 
 function rollDice() {
+
+    playClickSound();
+
     if (state.state !== 'WAIT_ROLL') return;
     
     const diceEl = document.getElementById('diceDisplay');
     const rollBtn = document.getElementById('rollBtn');
+    playBass(90);
+
+    playDiceSound();
     diceEl.classList.add('rolling');
     rollBtn.disabled = true;
     state.state = 'ANIMATING';
@@ -538,7 +792,41 @@ function rollDice() {
             clearInterval(interval);
             diceEl.classList.remove('rolling');
             
-            const finalVal = Math.floor(Math.random() * 6) + 1;
+            // SMARTER DICE SYSTEM
+            let finalVal;
+
+            if(!state.players[state.turn].rollMemory){
+                state.players[state.turn].rollMemory = 0;
+            }
+
+            state.players[state.turn].rollMemory++;
+
+            if(
+                state.players[state.turn].rollMemory >= 5
+            ){
+
+                const boosted = Math.random();
+
+                if(boosted < 0.40){
+
+                    finalVal = 6;
+                    state.players[state.turn].rollMemory = 0;
+
+                }else{
+
+                    finalVal =
+                        Math.floor(Math.random() * 6) + 1;
+                }
+
+            }else{
+
+                finalVal =
+                    Math.floor(Math.random() * 6) + 1;
+
+                if(finalVal === 6){
+                    state.players[state.turn].rollMemory = 0;
+                }
+            }
             state.diceVal = finalVal;
             diceEl.textContent = DICE_FACES[finalVal - 1];
             
@@ -598,9 +886,25 @@ function checkMoves() {
         return;
     }
     
-    if (valid.length === 1) {
+    // HUMAN MANUAL MOVE AFTER 6
+    if (
+        valid.length === 1 &&
+        !(
+            state.diceVal === 6 &&
+            !state.players[state.turn].isBot
+        )
+    ) {
+
         setMessage("Auto-moving token...");
-        setTimeout(() => executeMove(state.turn, valid[0], state.diceVal), 500);
+
+        setTimeout(() =>
+            executeMove(
+                state.turn,
+                valid[0],
+                state.diceVal
+            ),
+        500);
+
         return;
     }
 
@@ -636,6 +940,8 @@ canvas.addEventListener('click', (e) => {
         }
         
         if (Math.abs(pr - row) <= 1 && Math.abs(pc - col) <= 1) {
+            playClickSound();
+
             executeMove(state.turn, i, state.diceVal);
             return;
         }
@@ -689,6 +995,7 @@ function executeMove(pId, pieceIdx, diceVal) {
     let step = 0;
     let hopInterval = setInterval(() => {
         if (step < path.length) {
+            playMoveSound();
             p.pieces[pieceIdx] = path[step];
             drawBoard();
             step++;
@@ -711,6 +1018,9 @@ function finalizeMove(pId, pieceIdx, diceVal, newPos) {
                     if (opPos === newPos) {
                         op.pieces[idx] = 0; 
                         turnContinues = true;
+                        playBass(70);
+
+                        playCaptureSound();
                         setMessage("Captured opponent! Extra turn!");
                     }
                 });
@@ -725,6 +1035,9 @@ function finalizeMove(pId, pieceIdx, diceVal, newPos) {
         if (p.pieces.every(x => x === 106)) {
             p.finished = true;
             document.getElementById('winnerBanner').textContent = `🏆 ${COLORS[pId].name} Player Wins!`;
+            playBass(55);
+
+            playWinSound();
             document.getElementById('winnerBanner').classList.add('show');
             state.state = 'GAMEOVER';
             drawBoard();
@@ -738,12 +1051,35 @@ function finalizeMove(pId, pieceIdx, diceVal, newPos) {
         if (diceVal === 6) turnContinues = true;
         
         if (turnContinues) {
+
             state.state = 'WAIT_ROLL';
-            if (!document.querySelector('.message').textContent.includes("Captured") && !document.querySelector('.message').textContent.includes("home")) {
+
+            if (
+                !document.querySelector('.message')
+                .textContent.includes("Captured") &&
+                !document.querySelector('.message')
+                .textContent.includes("home")
+            ) {
+
                 setMessage("Rolled a 6! Roll again.");
             }
+
             updateUI();
+
+            // FIX BOT EXTRA TURN FREEZE
+            if(
+                state.players[state.turn] &&
+                state.players[state.turn].isBot &&
+                !state.paused
+            ){
+
+                setTimeout(()=>{
+                    botTurn();
+                },900);
+            }
+
         } else {
+
             nextTurn();
         }
     }, turnContinues ? 1200 : 400);
@@ -804,7 +1140,582 @@ function setMessage(msg) {
 }
 
 // Start
-initGame();
+
+
+
+
+
+// ===== PEACEFUL SOUND SYSTEM =====
+
+
+
+
+// EXTRA BASS BOOST
+function playBass(freq=120){
+
+    try{
+
+        const bassOsc =
+            audioCtx.createOscillator();
+
+        const bassGain =
+            audioCtx.createGain();
+
+        bassOsc.type = "sawtooth";
+        bassOsc.frequency.value = freq;
+
+        bassGain.gain.value = 0.35;
+
+        bassOsc.connect(bassGain);
+        bassGain.connect(audioCtx.destination);
+
+        bassOsc.start();
+
+        bassGain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioCtx.currentTime + 0.25
+        );
+
+        bassOsc.stop(audioCtx.currentTime + 0.25);
+
+    }catch(e){}
+}
+
+// ===== EXTRA PROFESSIONAL GAME SOUNDS =====
+
+// click sound
+function playClickSound(){
+
+    playTone(
+        820,
+        0.04,
+        "triangle",
+        0.75
+    );
+
+    setTimeout(()=>{
+        playTone(
+            1020,
+            0.03,
+            "triangle",
+            0.48
+        );
+    },20);
+}
+
+// turn change sound
+function playTurnSound(){
+
+    playTone(
+        440,
+        0.10,
+        "triangle",
+        0.48
+    );
+
+    setTimeout(()=>{
+        playTone(
+            660,
+            0.08,
+            "triangle",
+            0.34
+        );
+    },70);
+}
+
+// start game sound
+function playStartSound(){
+
+    const notes = [392,523,659,784];
+
+    notes.forEach((n,i)=>{
+
+        setTimeout(()=>{
+            playTone(
+                n,
+                0.34,
+                "triangle",
+                0.65
+            );
+        },i*90);
+
+    });
+}
+
+// hover sound
+function playHoverSound(){
+
+    playTone(
+        560,
+        0.025,
+        "sine",
+        0.10
+    );
+}
+
+// bonus sound
+function playBonusSound(){
+
+    playTone(
+        520,
+        0.14,
+        "triangle",
+        0.55
+    );
+
+    setTimeout(()=>{
+        playTone(
+            820,
+            0.30,
+            "triangle",
+            0.48
+        );
+    },80);
+}
+
+
+let audioEnabled = true;
+
+// FIXED GLOBAL AUDIO CONTEXT
+const audioCtx =
+    new (window.AudioContext ||
+    window.webkitAudioContext)();
+
+// unlock audio on first touch/click
+function unlockAudio(){
+
+    if(audioCtx.state === 'suspended'){
+        audioCtx.resume();
+    }
+
+    document.removeEventListener('click', unlockAudio);
+    document.removeEventListener('touchstart', unlockAudio);
+}
+
+document.addEventListener('click', unlockAudio);
+document.addEventListener('touchstart', unlockAudio);
+
+function playTone(freq,duration,type="sine",volume=0.48){
+
+    if(!audioEnabled) return;
+
+    try{
+
+        const oscillator =
+            audioCtx.createOscillator();
+
+        const gain =
+            audioCtx.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = freq;
+
+        
+// extra loudness boost
+
+// ULTRA LOUD BOOST
+gain.gain.value = Math.min(volume * 12, 1);
+
+
+
+        oscillator.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        oscillator.start();
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioCtx.currentTime + duration
+        );
+
+        oscillator.stop(
+            audioCtx.currentTime + duration
+        );
+
+    }catch(e){}
+}
+
+// Dice rolling sound
+function playDiceSound(){
+
+    let i = 0;
+
+    const interval = setInterval(()=>{
+
+        playTone(
+            200 + Math.random()*200,
+            0.65,
+            "triangle",
+            0.48
+        );
+
+        i++;
+
+        if(i > 8){
+            clearInterval(interval);
+        }
+
+    },40);
+}
+
+// Token move sound
+function playMoveSound(){
+
+    playTone(420,0.48,"sine",0.30);
+
+    setTimeout(()=>{
+        playTone(520,0.48,"sine",0.30);
+    },80);
+}
+
+// Capture sound
+function playCaptureSound(){
+
+    playTone(220,0.48,"square",0.48);
+
+    setTimeout(()=>{
+        playTone(140,0.15,"square",0.48);
+    },100);
+}
+
+// Win sound
+function playWinSound(){
+
+    const melody = [523,659,784,1046];
+
+    melody.forEach((n,i)=>{
+
+        setTimeout(()=>{
+
+            playTone(
+                n,
+                0.55,
+                "triangle",
+                0.65
+            );
+
+        },i*180);
+
+    });
+}
+
+// Soft ambient background melody
+function startAmbientMusic(){
+
+    if(window.ambientStarted) return;
+
+    window.ambientStarted = true;
+
+    // peaceful relaxing melody
+    const melody = [
+        261.63,329.63,392.00,523.25,
+        392.00,329.63,293.66,349.23
+    ];
+
+    let idx = 0;
+
+    setInterval(()=>{
+
+        if(state.paused) return;
+
+        // main note
+        playTone(
+            melody[idx % melody.length],
+            0.9,
+            "sine",
+            0.48
+        );
+
+        // soft harmony
+        setTimeout(()=>{
+            playTone(
+                melody[idx % melody.length] * 1.5,
+                0.7,
+                "triangle",
+                0.08
+            );
+        },180);
+
+        idx++;
+
+    },1800);
+}
+
+
+
+// ===== CLEAN MULTIPLAYER SYSTEM =====
+
+state.paused = false;
+
+function setupPlayers(total,humans){
+
+    state.players = [];
+
+    let ids = [0,1,2,3];
+
+    if(total===2) ids=[0,1];
+    if(total===3) ids=[0,1,2];
+
+    ids.forEach((id,index)=>{
+
+        state.players.push({
+            id:id,
+            color:COLORS[id],
+            pieces:[0,0,0,0],
+            finished:false,
+            isBot:index>=humans
+        });
+
+    });
+
+    state.turn = 0;
+    state.state = 'WAIT_ROLL';
+    state.sixCount = 0;
+
+    updateUI();
+    drawBoard();
+
+    playTurnSound();
+
+    setMessage(`${state.players[0].color.name}'s turn`);
+
+    if(state.players[0].isBot){
+        setTimeout(botTurn,900);
+    }
+}
+
+document.getElementById('startGameBtn').onclick = function(){
+
+    playClickSound();
+    playStartSound();
+
+
+    let total =
+        parseInt(document.getElementById('playerMode').value);
+
+    let humans =
+        parseInt(document.getElementById('humanMode').value);
+
+    if(humans > total) humans = total;
+
+    document.getElementById('startMenu').style.display='none';
+
+    setupPlayers(total,humans);
+
+    startAmbientMusic();
+};
+
+document.getElementById('pauseBtn').onclick = function(){
+
+    playClickSound();
+
+
+    state.paused = !state.paused;
+
+    this.innerText =
+        state.paused ? 'Resume' : 'Pause';
+
+    // RESUME GAME FIX
+    if(
+        !state.paused &&
+        state.players[state.turn] &&
+        state.players[state.turn].isBot &&
+        state.state === 'WAIT_ROLL'
+    ){
+
+        setTimeout(()=>{
+            botTurn();
+        },500);
+    }
+
+    updateUI();
+};
+
+document.getElementById('restartBtn').onclick = function(){
+
+    playClickSound();
+
+    location.reload();
+};
+
+const oldNextTurn = nextTurn;
+
+nextTurn = function(){
+
+    let loops = 0;
+
+    do{
+
+        state.turn++;
+
+        if(state.turn >= state.players.length){
+            state.turn = 0;
+        }
+
+        loops++;
+
+    }while(
+        state.players[state.turn].finished &&
+        loops < 10
+    );
+
+    state.sixCount = 0;
+    state.state = 'WAIT_ROLL';
+
+    updateUI();
+
+    playTurnSound();
+
+    setMessage(
+        `${state.players[state.turn].color.name}'s turn`
+    );
+
+    if(
+        state.players[state.turn].isBot &&
+        !state.paused
+    ){
+        setTimeout(botTurn,900);
+    }
+};
+
+const oldUpdateUI = updateUI;
+
+updateUI = function(){
+
+    oldUpdateUI();
+
+    const btn =
+        document.getElementById('rollBtn');
+
+    if(state.players[state.turn].isBot){
+
+        btn.disabled = true;
+        btn.innerText = 'BOT TURN';
+
+    }else if(state.state === 'WAIT_ROLL'){
+
+        btn.disabled = false;
+        btn.innerText = 'ROLL DICE';
+    }
+};
+
+function botTurn(){
+
+    if(state.paused) return;
+
+    if(state.state !== 'WAIT_ROLL') return;
+
+    rollDice();
+
+    const wait = setInterval(()=>{
+
+        if(state.state === 'WAIT_MOVE'){
+
+            clearInterval(wait);
+
+            let valid =
+                getValidMoves(
+                    state.turn,
+                    state.diceVal
+                );
+
+            if(!valid.length) return;
+
+            let best = valid[0];
+            let score = -9999;
+
+            valid.forEach(piece=>{
+
+                let s = botScore(piece);
+
+                if(s > score){
+                    score = s;
+                    best = piece;
+                }
+
+            });
+
+            setTimeout(()=>{
+                executeMove(
+                    state.turn,
+                    best,
+                    state.diceVal
+                );
+            },700);
+        }
+
+    },100);
+}
+
+function botScore(pieceIdx){
+
+    let p =
+        state.players[state.turn];
+
+    let pos =
+        p.pieces[pieceIdx];
+
+    let score = 0;
+
+    if(pos===0 && state.diceVal===6){
+        score += 500;
+    }
+
+    if(pos>=101){
+        score += 2000;
+    }
+
+    let target = pos + state.diceVal;
+
+    if(target >= 106){
+        score += 10000;
+    }
+
+    if(
+        target<=52 &&
+        STAR_SAFE_SQUARES.includes(target-1)
+    ){
+        score += 1200;
+    }
+
+    state.players.forEach(op=>{
+
+        if(op.id===p.id) return;
+
+        op.pieces.forEach(enemy=>{
+
+            if(enemy===target){
+                score += 6000;
+            }
+
+        });
+
+    });
+
+    score += target * 3;
+
+    return score;
+}
+
+
+
+// hover sounds
+window.addEventListener('load',()=>{
+
+    document.querySelectorAll('button,select')
+    .forEach(el=>{
+
+        el.addEventListener('mouseenter',()=>{
+            playHoverSound();
+        });
+
+        el.addEventListener('touchstart',()=>{
+            playHoverSound();
+        });
+
+    });
+
+});
 
 </script>
 </body>
